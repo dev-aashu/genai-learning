@@ -1,0 +1,1 @@
+Learning goals: 1) Understand agent loops 2) Learn LangGraph 3) Learn Google ADK 4) Write a comparison

@@ -1,0 +1,1 @@
+Meeting notes: Discuss LangGraph vs ADK comparison on Friday. Demo the plain Python agent first.
