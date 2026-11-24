@@ -5,6 +5,7 @@ Any MCP client (our agent, Claude Desktop, Cursor...) can discover and call thes
 import math
 from datetime import datetime
 from pathlib import Path
+import gdrive
 
 from mcp.server.fastmcp import FastMCP
 
@@ -43,5 +44,24 @@ def list_data_files() -> str:
     files = [p.name for p in DATA_DIR.glob("*") if p.is_file()]
     return ", ".join(files) if files else "No files found."
 
+@mcp.tool()
+def search_drive_files(query: str) -> str:
+    """Search the user's Google Drive for files whose name contains the query text.
+    Returns file names with their ids. Use read_drive_file with an id to read a file."""
+    try:
+        return gdrive.search_files(query)
+    except Exception as e:
+        return f"Error: {e}"
+
+
+@mcp.tool()
+def read_drive_file(file_id: str) -> str:
+    """Read the text content of a Google Drive file (Google Doc, Google Sheet or text file)
+    using its file id from search_drive_files."""
+    try:
+        return gdrive.read_file(file_id)
+    except Exception as e:
+        return f"Error: {e}"
+    
 if __name__ == "__main__":
     mcp.run()  # stdio transport: talks over stdin/stdout
